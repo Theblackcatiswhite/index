@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glovalis - Tu Asistente Académico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --primary-dark: #3a5a8a;
+            --secondary: #6e9cd2;
+            --accent: #ff7e5f;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --gray: #5f6368;
+            --light-gray: #dadce0;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --hover-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 16px;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            background-color: rgba(74, 111, 165, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            color: var(--primary);
+            font-size: 26px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            color: var(--dark);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            flex-grow: 1;
+        }
+        
+        /* Demo Section */
+        .demo-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--dark);
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            background: #fafafa;
+        }
+        
+        .message {
+            max-width: 75%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .ai-message {
+            align-self: flex-start;
+            background-color: white;
+            color: var(--dark);
+            border: 1px solid var(--light-gray);
+            border-top-left-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+        
+        .input-area {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 16px 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .input-area input:focus {
+            border-color: var(--primary);
+        }
+        
+        .input-area button {
+            padding: 16px 28px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .input-area button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* Subjects Grid */
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+        
+        .subject-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .subject-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        
+        .subject-card h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 80px 24px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background-color: white;
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Ad Container */
+        .ad-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        
+        .ad-placeholder {
+            width: 100%;
+            height: 150px;
+            background: #f1f3f4;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 18px;
+            border: 2px dashed var(--light-gray);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: white;
+            padding: 60px 24px 30px;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            text-decoration: none;
+            color: var(--gray);
+            transition: color 0.2s;
+            font-size: 16px;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid var(--light-gray);
+            text-align: center;
+            color: var(--gray);
+            font-size: 15px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .features, .subjects {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .features, .subjects {
+                grid-template-columns: 1fr;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .input-area {
+                flex-direction: column;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                font-size: 24px;
+                color: var(--primary);
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+        }
+        
+        /* Mobile menu button (hidden by default) */
+        .mobile-menu-btn {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            <span>Glovalis</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Asignaturas</a></li>
+                <li><a href="#">Recursos</a></li>
+                <li><a href="#">Para Educadores</a></li>
+                <li><a href="#">Precios</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn btn-outline">Iniciar Sesión</button>
+            <button class="btn btn-primary">Registrarse</button>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <section class="hero">
+        <h1>Tu asistente académico inteligente</h1>
+        <p>Glovalis te ayuda a estudiar más eficientemente, resumiendo documentos, explicando conceptos complejos y generando tests de práctica para estudiantes. Crea presentaciones con diapositivas e incluso podcast para estudiar mientras haces otras cosas!</p>
+        <button class="btn btn-primary">Comenzar ahora - Es gratis</button>
+    </section>
+
+    <div class="ad-container">
+        <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>Resúmenes Inteligentes</h3>
+            <p>Sube tus apuntes y Glovalis creará resúmenes concisos con los puntos clave, ideal para repasar antes de exámenes.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-check-square"></i></div>
+            <h3>Tests de Práctica</h3>
+            <p>Genera exámenes personalizados basados en tus materiales de estudio para evaluar tu comprensión de los temas.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+            <h3>Mapas Mentales</h3>
+            <p>Convierte tus apuntes en esquemas visuales y mapas mentales que facilitan la comprensión de conceptos complejos.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-podcast"></i></div>
+            <h3>Podcasts Educativos</h3>
+            <p>Transforma tus materiales de estudio en podcasts para aprender mientras realizas otras actividades.</p>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <h2 class="section-title">Interactúa con Glovalis</h2>
+        <div class="demo-container">
+            <div class="chat-container" id="chatContainer">
+                <div class="message ai-message">
+                    ¡Hola! Soy Glovalis, tu asistente académico. ¿En qué puedo ayudarte hoy? Puedo explicarte conceptos, ayudarte a estudiar o resolver tus dudas.
+                    <div class="message-time">Ahora</div>
+                </div>
+                <div class="message user-message">
+                    ¿Puedes explicarme la fotosíntesis de manera simple?
+                    <div class="message-time">Hace 2 min</div>
+                </div>
+                <div class="message ai-message">
+                    La fotosíntesis es el proceso mediante el cual las plantas transforman la energía luminosa en energía química. Utilizan dióxido de carbono y agua para producir glucosa (su alimento) y liberar oxígeno. Se lleva a cabo en los cloroplastos y consta de dos fases: la fase luminosa y la fase oscura.
+                    <div class="message-time">Hace 1 min</div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Escribe tu pregunta aquí...">
+                <button id="sendButton">Enviar</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="ad-container">
+        <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <section class="subjects">
+        <h2 class="section-title" style="grid-column: 1 / -1; text-align: center; margin-bottom: 20px;">Asignaturas disponibles</h2>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-flask"></i></div>
+            <h3>Química</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-calculator"></i></div>
+            <h3>Matemáticas</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-dna"></i></div>
+            <h3>Biología</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-landmark"></i></div>
+            <h3>Historia</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-globe-americas"></i></div>
+            <h3>Geografía</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-book"></i></div>
+            <h3>Literatura</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-language"></i></div>
+            <h3>Idiomas</h3>
+        </div>
+        <div class="subject-card">
+            <div class="subject-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>Informática</h3>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Comienza a mejorar tus estudios hoy</h2>
+        <p>Glovalis es completamente gratuito y está diseñado específicamente para estudiantes como tú.</p>
+        <button class="cta-button">Crear cuenta gratuita</button>
+    </section>
+
+    <div class="ad-container">
+        <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Glovalis</h3>
+                <ul>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Trabajos</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="#">Centro de ayuda</a></li>
+                    <li><a href="#">Tutoriales</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Comunidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Política de cookies</a></li>
+                    <li><a href="#">Derechos de autor</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Síguenos</h3>
+                <ul>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Glovalis. Todos los derechos reservados. Diseñado para estudiantes.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chatContainer');
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            
+            // Respuestas predefinidas para el demo
+            const responses = [
+                "Interesante pregunta. Según los materiales de estudio, esto se explica como...",
+                "Ese concepto es fundamental. Podemos entenderlo mejor si lo dividimos en partes: primero...",
+                "Buena pregunta. Los estudios muestran que este fenómeno ocurre porque...",
+                "Ese tema es complejo pero fascinante. La explicación más aceptada es...",
+                "Para responder eso, necesitaríamos revisar los apuntes que hayas subido previamente.",
+                "Esa es una duda común entre estudiantes. La respuesta breve es...",
+                "Según los libros de texto, podemos abordar este tema desde diferentes perspectivas...",
+                "¡Excelente pregunta! La respuesta involucra varios conceptos que vale la pena explorar..."
+            ];
+            
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+                
+                const now = new Date();
+                const timeString = isUser ? "Ahora" : `Hace 1 min`;
+                
+                messageDiv.innerHTML = `${message}<div class="message-time">${timeString}</div>`;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            function getRandomResponse() {
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    addMessage(message, true);
+                    userInput.value = '';
+                    
+                    // Simular tiempo de respuesta
+                    setTimeout(() => {
+                        addMessage(getRandomResponse(), false);
+                    }, 1500);
+                }
+            });
+            
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendButton.click();
+                }
+            });
+            
+            // Efectos de hover en tarjetas
+            const cards = document.querySelectorAll('.feature-card, .subject-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px)';
+                    card.style.boxShadow = '0 12px 20px rgba(0,0,0,0.15)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

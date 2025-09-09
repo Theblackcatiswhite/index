@@ -295,6 +295,14 @@
             opacity: 0.7;
         }
         
+        .sources {
+            font-size: 12px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #ccc;
+            color: var(--gray);
+        }
+        
         .chat-input {
             display: flex;
             gap: 10px;
@@ -360,14 +368,6 @@
             margin-left: 10px;
             border: 1px solid #91d5ff;
             font-weight: 500;
-        }
-        
-        .sources {
-            font-size: 12px;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed #ccc;
-            color: var(--gray);
         }
         
         /* Content Transformation Section */
@@ -1042,7 +1042,15 @@
         </div>
     </footer>
 
+    <!-- Script de Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
+        // Configuración de Supabase - REEMPLAZA con tus propios valores
+        // CONFIGURACIÓN DE SUPABASE CON TUS DATOS REALES
+        const supabaseUrl = 'https://ybqemjjsacbdsdnwamrt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlicWVtampzYWNiZHNkbndhbXJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MTEzODksImV4cCI6MjA3Mjk4NzM4OX0.7gN18i0IjOX0UV-uHiFfVZXteSOh0rYWm1sEHOgro3s';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
         // Funciones para el sistema de registro
         function abrirModalRegistro() {
             console.log("Abriendo modal de registro");
@@ -1062,20 +1070,68 @@
             document.getElementById('emailFormModal').style.display = 'none';
         }
 
-        // Funciones para registrar con diferentes proveedores
-        function registrarConGoogle() {
-            console.log("Registrando con Google");
-            window.location.href = 'https://tudominio.com/api/auth/google';
+        // FUNCIONES ACTUALIZADAS PARA REGISTRO CON SUPABASE
+        async function registrarConGoogle() {
+            console.log("Registrando con Google a través de Supabase");
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google'
+                });
+                if (error) throw error;
+                console.log("Redirección a Google exitosa");
+            } catch (error) {
+                console.error("Error registrando con Google:", error.message);
+                alert("Error al registrar con Google: " + error.message);
+            }
         }
 
-        function registrarConFacebook() {
-            console.log("Registrando con Facebook");
-            window.location.href = 'https://tudominio.com/api/auth/facebook';
+        async function registrarConFacebook() {
+            console.log("Registrando con Facebook a través de Supabase");
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'facebook'
+                });
+                if (error) throw error;
+                console.log("Redirección a Facebook exitosa");
+            } catch (error) {
+                console.error("Error registrando con Facebook:", error.message);
+                alert("Error al registrar con Facebook: " + error.message);
+            }
         }
 
-        function registrarConMicrosoft() {
-            console.log("Registrando con Microsoft");
-            window.location.href = 'https://tudominio.com/api/auth/microsoft';
+        async function registrarConMicrosoft() {
+            console.log("Registrando con Microsoft a través de Supabase");
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'azure'
+                });
+                if (error) throw error;
+                console.log("Redirección a Microsoft exitosa");
+            } catch (error) {
+                console.error("Error registrando con Microsoft:", error.message);
+                alert("Error al registrar con Microsoft: " + error.message);
+            }
+        }
+
+        // Función para guardar usuario en la tabla personalizada
+        async function guardarUsuarioEnTabla(usuario) {
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios_glovalis')
+                    .insert([
+                        {
+                            email: usuario.email,
+                            nombre: usuario.user_metadata?.full_name || 'Usuario',
+                            proveedor: usuario.app_metadata?.provider || 'email',
+                            fecha_registro: new Date().toISOString()
+                        }
+                    ]);
+                
+                if (error) throw error;
+                console.log("Usuario guardado en tabla personalizada");
+            } catch (error) {
+                console.error("Error guardando usuario en tabla:", error.message);
+            }
         }
 
         // Funciones para subir archivos
@@ -1098,7 +1154,7 @@
         });
 
         // Manejar envío del formulario de email
-        document.getElementById('formularioEmail').addEventListener('submit', function(e) {
+        document.getElementById('formularioEmail').addEventListener('submit', async function(e) {
             e.preventDefault();
             console.log("Formulario de email enviado");
             
@@ -1113,9 +1169,32 @@
                 return;
             }
             
-            // Simular envío a n8n (en producción se conectaría realmente)
-            alert('Registro exitoso. Conectando con n8n...\n\nNombre: ' + nombre + '\nEmail: ' + email);
-            cerrarEmailForm();
+            try {
+                // Registrar usuario con Supabase
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: nombre
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                
+                // Guardar usuario en tabla personalizada
+                if (data.user) {
+                    await guardarUsuarioEnTabla(data.user);
+                }
+                
+                alert('¡Registro exitoso! Por favor, revisa tu email para confirmar la cuenta.');
+                cerrarEmailForm();
+                
+            } catch (error) {
+                console.error("Error en registro:", error.message);
+                alert("Error en el registro: " + error.message);
+            }
         });
 
         document.addEventListener('DOMContentLoaded', function() {

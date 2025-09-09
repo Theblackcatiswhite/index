@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glovalis - Tu Asistente Académico</title>
+    <title>Glovalis - Transforma tus apuntes en recursos de estudio</title>
+    <meta name="description" content="Glovalis convierte tus documentos en resúmenes, tests, podcasts y presentaciones. Asistente académico con fuentes verificadas para estudiantes.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -15,8 +16,8 @@
             --dark: #202124;
             --gray: #5f6368;
             --light-gray: #dadce0;
-            --card-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --hover-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --hover-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
         
         * {
@@ -52,6 +53,7 @@
             font-weight: 700;
             font-size: 22px;
             color: var(--primary);
+            text-decoration: none;
         }
         
         .logo-icon {
@@ -90,15 +92,16 @@
         
         .btn {
             padding: 10px 20px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 15px;
+            border: none;
         }
         
         .btn-outline {
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary);
             color: var(--primary);
             background: transparent;
         }
@@ -106,18 +109,23 @@
         .btn-primary {
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
             color: white;
-            border: none;
+        }
+        
+        .btn-large {
+            padding: 14px 28px;
+            font-size: 16px;
         }
         
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
         }
         
         /* Hero Section */
         .hero {
             max-width: 1200px;
-            margin: 60px auto;
+            margin: 40px auto;
             padding: 0 24px;
             text-align: center;
         }
@@ -132,69 +140,240 @@
         .hero p {
             font-size: 1.25rem;
             color: var(--gray);
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto 40px;
         }
         
-        /* Features Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
+        /* Ad Container */
+        .ad-container {
             max-width: 1200px;
-            margin: 0 auto 80px;
+            margin: 30px auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+        
+        .ad-placeholder {
+            width: 100%;
+            height: 120px;
+            background: #f1f3f4;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 16px;
+            border: 2px dashed var(--light-gray);
+        }
+        
+        /* Tabs Section */
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
             padding: 0 24px;
         }
         
-        .feature-card {
-            background: white;
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: #f0f2f5;
+            padding: 5px;
             border-radius: 12px;
-            padding: 28px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tab {
+            padding: 14px 24px;
+            cursor: pointer;
+            border-radius: 8px;
+            background: transparent;
+            transition: all 0.3s;
             text-align: center;
-            height: 100%;
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .tab i {
+            margin-right: 8px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Chat Section */
+        .chat-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+        
+        @media (max-width: 900px) {
+            .chat-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
+            height: 480px;
         }
         
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--hover-shadow);
-        }
-        
-        .feature-icon {
-            width: 65px;
-            height: 65px;
-            background-color: rgba(74, 111, 165, 0.1);
-            border-radius: 50%;
+        .chat-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 18px;
+            gap: 10px;
+        }
+        
+        .chat-header i {
             color: var(--primary);
-            font-size: 26px;
+            font-size: 20px;
         }
         
-        .feature-card h3 {
-            margin-bottom: 16px;
-            font-size: 1.3rem;
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .ai-message {
+            align-self: flex-start;
+            background-color: white;
             color: var(--dark);
-            min-height: 60px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .message-time {
+            font-size: 12px;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .chat-input button {
+            padding: 14px 20px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .upload-btn {
+            padding: 10px 16px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
         
-        .feature-card p {
+        .upload-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .academic-badge {
+            display: inline-block;
+            background: #e6f7ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+            border: 1px solid #91d5ff;
+            font-weight: 500;
+        }
+        
+        .sources {
+            font-size: 12px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #ccc;
             color: var(--gray);
-            flex-grow: 1;
         }
         
-        /* Demo Section */
-        .demo-section {
+        /* Content Transformation Section */
+        .transform-section {
             max-width: 1200px;
-            margin: 0 auto 80px;
+            margin: 0 auto 60px;
             padding: 0 24px;
         }
         
@@ -205,100 +384,63 @@
             color: var(--dark);
         }
         
-        .demo-container {
+        .transform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .transform-card {
             background: white;
-            border-radius: 12px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 25px;
             box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            height: 400px;
-            overflow-y: auto;
-            padding: 20px;
-            border: 1px solid var(--light-gray);
-            border-radius: 12px;
-            background: #fafafa;
-        }
-        
-        .message {
-            max-width: 75%;
-            padding: 16px 20px;
-            border-radius: 12px;
-            line-height: 1.5;
-            position: relative;
-        }
-        
-        .user-message {
-            align-self: flex-end;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border-top-right-radius: 4px;
-        }
-        
-        .ai-message {
-            align-self: flex-start;
-            background-color: white;
-            color: var(--dark);
-            border: 1px solid var(--light-gray);
-            border-top-left-radius: 4px;
-        }
-        
-        .message-time {
-            font-size: 12px;
-            margin-top: 8px;
-            opacity: 0.8;
-        }
-        
-        .input-area {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .input-area input {
-            flex: 1;
-            padding: 16px 20px;
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-            transition: border 0.3s;
-        }
-        
-        .input-area input:focus {
-            border-color: var(--primary);
-        }
-        
-        .input-area button {
-            padding: 16px 28px;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
         }
         
-        .input-area button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        .transform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
         }
         
-        /* Subjects Grid */
+        .transform-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(74, 111, 165, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 32px;
+        }
+        
+        .transform-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .transform-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        /* Subjects Section */
         .subjects {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             max-width: 1200px;
-            margin: 0 auto 80px;
+            margin: 0 auto 60px;
             padding: 0 24px;
         }
         
@@ -313,7 +455,7 @@
         }
         
         .subject-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
         }
         
@@ -332,8 +474,11 @@
         .cta-section {
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
             color: white;
-            padding: 80px 24px;
+            padding: 70px 24px;
             text-align: center;
+            border-radius: 16px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
         }
         
         .cta-section h2 {
@@ -348,48 +493,10 @@
             opacity: 0.9;
         }
         
-        .cta-button {
-            background-color: white;
-            color: var(--primary);
-            padding: 16px 40px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-        
-        /* Ad Container */
-        .ad-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 24px;
-            text-align: center;
-        }
-        
-        .ad-placeholder {
-            width: 100%;
-            height: 150px;
-            background: #f1f3f4;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            font-size: 18px;
-            border: 2px dashed var(--light-gray);
-        }
-        
         /* Footer */
         footer {
             background-color: white;
-            padding: 60px 24px 30px;
+            padding: 50px 24px 20px;
             box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
         }
         
@@ -399,6 +506,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 40px;
+            margin-bottom: 40px;
         }
         
         .footer-column h3 {
@@ -426,10 +534,34 @@
             color: var(--primary);
         }
         
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            color: var(--dark);
+            transition: all 0.2s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
         .copyright {
             max-width: 1200px;
-            margin: 60px auto 0;
-            padding-top: 30px;
+            margin: 0 auto;
+            padding-top: 20px;
             border-top: 1px solid var(--light-gray);
             text-align: center;
             color: var(--gray);
@@ -437,12 +569,6 @@
         }
         
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            .features, .subjects {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
         @media (max-width: 768px) {
             nav ul {
                 display: none;
@@ -454,22 +580,6 @@
             
             .hero p {
                 font-size: 1.1rem;
-            }
-            
-            .features, .subjects {
-                grid-template-columns: 1fr;
-            }
-            
-            .message {
-                max-width: 85%;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .input-area {
-                flex-direction: column;
             }
             
             .auth-buttons {
@@ -484,91 +594,341 @@
                 border: none;
                 cursor: pointer;
             }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .upload-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .upload-btn {
+                justify-content: center;
+            }
         }
         
         /* Mobile menu button (hidden by default) */
         .mobile-menu-btn {
             display: none;
         }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Estilo para el icono de X */
+        .fa-x {
+            font-weight: bold;
+        }
+        
+        /* Icono de presentaciones */
+        .fa-presentation-screen:before {
+            content: "\f685";
+        }
+        
+        /* Estilos para el modal de registro */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            position: relative;
+            background: white;
+            max-width: 400px;
+            width: 90%;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .btn-social {
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .btn-social:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .email-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 15px 0;
+            color: var(--gray);
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--light-gray);
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
+        <a href="#" class="logo">
             <div class="logo-icon">G</div>
             <span>Glovalis</span>
-        </div>
+        </a>
         <nav>
             <ul>
                 <li><a href="#">Inicio</a></li>
                 <li><a href="#">Asignaturas</a></li>
-                <li><a href="#">Recursos</a></li>
-                <li><a href="#">Para Educadores</a></li>
+                <li><a href="#">Transformar</a></li>
+                <li><a href="#">Para Profesores</a></li>
                 <li><a href="#">Precios</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
-            <button class="btn btn-outline">Iniciar Sesión</button>
-            <button class="btn btn-primary">Registrarse</button>
+            <button class="btn btn-outline" id="loginBtn">Iniciar Sesión</button>
+            <button class="btn btn-primary" id="registerBtn">Registrarse</button>
         </div>
-        <button class="mobile-menu-btn">
+        <button class="mobile-menu-btn" aria-label="Abrir menú">
             <i class="fas fa-bars"></i>
         </button>
     </header>
 
     <section class="hero">
-        <h1>Tu asistente académico inteligente</h1>
-        <p>Glovalis te ayuda a estudiar más eficientemente, resumiendo documentos, explicando conceptos complejos y generando tests de práctica para estudiantes. Crea presentaciones con diapositivas e incluso podcast para estudiar mientras haces otras cosas!</p>
-        <button class="btn btn-primary">Comenzar ahora - Es gratis</button>
+        <h1>Transforma tus apuntes en aprendizaje</h1>
+        <p>Glovalis convierte tus documentos en resúmenes, tests, podcasts, vídeos y presentaciones. Asistente académico con fuentes verificadas para estudiantes.</p>
+        <button class="btn btn-primary btn-large" id="heroRegisterBtn">Comenzar ahora - Es gratis</button>
     </section>
 
     <div class="ad-container">
         <div class="ad-placeholder">Espacio publicitario</div>
     </div>
 
-    <section class="features">
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
-            <h3>Resúmenes Inteligentes</h3>
-            <p>Sube tus apuntes y Glovalis creará resúmenes concisos con los puntos clave, ideal para repasar antes de exámenes.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fas fa-check-square"></i></div>
-            <h3>Tests de Práctica</h3>
-            <p>Genera exámenes personalizados basados en tus materiales de estudio para evaluar tu comprensión de los temas.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
-            <h3>Mapas Mentales</h3>
-            <p>Convierte tus apuntes en esquemas visuales y mapas mentales que facilitan la comprensión de conceptos complejos.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon"><i class="fas fa-podcast"></i></div>
-            <h3>Podcasts Educativos</h3>
-            <p>Transforma tus materiales de estudio en podcasts para aprender mientras realizas otras actividades.</p>
+    <section class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="chats"><i class="fas fa-comments"></i> Chats</div>
+            <div class="tab" data-tab="transform"><i class="fas fa-magic"></i> Transformar Contenido</div>
+            <div class="tab" data-tab="subjects"><i class="fas fa-graduation-cap"></i> Asignaturas</div>
         </div>
     </section>
 
-    <section class="demo-section">
-        <h2 class="section-title">Interactúa con Glovalis</h2>
-        <div class="demo-container">
-            <div class="chat-container" id="chatContainer">
-                <div class="message ai-message">
-                    ¡Hola! Soy Glovalis, tu asistente académico. ¿En qué puedo ayudarte hoy? Puedo explicarte conceptos, ayudarte a estudiar o resolver tus dudas.
-                    <div class="message-time">Ahora</div>
+    <section class="tab-content active" id="chats-tab">
+        <div class="chat-section">
+            <!-- Chat basado en documentos -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Chat de tus documentos</h3>
                 </div>
-                <div class="message user-message">
-                    ¿Puedes explicarme la fotosíntesis de manera simple?
-                    <div class="message-time">Hace 2 min</div>
+                <div class="upload-section">
+                    <span>Sube material para analizar:</span>
+                    <button class="upload-btn" id="uploadPdf">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </button>
+                    <button class="upload-btn" id="uploadImage">
+                        <i class="fas fa-images"></i> Imágenes
+                    </button>
+                    <button class="upload-btn" id="uploadYoutube">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </button>
                 </div>
-                <div class="message ai-message">
-                    La fotosíntesis es el proceso mediante el cual las plantas transforman la energía luminosa en energía química. Utilizan dióxido de carbono y agua para producir glucosa (su alimento) y liberar oxígeno. Se lleva a cabo en los cloroplastos y consta de dos fases: la fase luminosa y la fase oscura.
-                    <div class="message-time">Hace 1 min</div>
+                <div class="chat-messages" id="documentChat">
+                    <div class="message ai-message">
+                        Hola, sube tus documentos y podré ayudarte a entenderlos mejor. Puedo resumirlos, crear tests y mucho más.
+                        <div class="message-time">Ahora</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="documentInput" placeholder="Pregunta sobre tus documentos..." aria-label="Pregunta sobre tus documentos">
+                    <button id="documentSend"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
-            <div class="input-area">
-                <input type="text" id="userInput" placeholder="Escribe tu pregunta aquí...">
-                <button id="sendButton">Enviar</button>
+
+            <!-- Chat académico -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Chat académico <span class="academic-badge">Fuentes verificadas</span></h3>
+                </div>
+                <div class="chat-messages" id="academicChat">
+                    <div class="message ai-message">
+                        Hola, soy tu asistente académico. Mis respuestas se basan en libros de texto, revistas científicas y materiales educativos verificados.
+                        <div class="message-time">Ahora</div>
+                        <div class="sources">
+                            <strong>Fuentes verificadas:</strong> Base de conocimientos académicos Glovalis
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="academicInput" placeholder="Haz una pregunta académica..." aria-label="Haz una pregunta académica">
+                    <button id="academicSend"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tab-content" id="transform-tab">
+        <div class="transform-section">
+            <h2 class="section-title">Transforma tu contenido</h2>
+            <div class="transform-grid">
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Resúmenes</h3>
+                    <p>Convierte textos largos en resúmenes concisos con los puntos más importantes destacados.</p>
+                    <button class="btn btn-outline">Crear resumen</button>
+                </div>
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-question-circle"></i></div>
+                    <h3>Tests de práctica</h3>
+                    <p>Genera exámenes de 10 preguntas para poner a prueba tu conocimiento sobre el material.</p>
+                    <button class="btn btn-outline">Crear test</button>
+                </div>
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-podcast"></i></div>
+                    <h3>Podcasts</h3>
+                    <p>Convierte tus apuntes en audio para estudiar mientras caminas, conduces o descansas.</p>
+                    <button class="btn btn-outline">Crear podcast</button>
+                </div>
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-video"></i></div>
+                    <h3>Vídeos</h3>
+                    <p>Transforma tu material en vídeos explicativos con voz de IA y visualizaciones atractivas.</p>
+                    <button class="btn btn-outline">Crear vídeo</button>
+                </div>
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-presentation-screen"></i></div>
+                    <h3>Presentaciones</h3>
+                    <p>Genera automáticamente presentaciones en PowerPoint o Google Slides con tus apuntes.</p>
+                    <button class="btn btn-outline">Crear presentación</button>
+                </div>
+                <div class="transform-card">
+                    <div class="transform-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Mapas mentales</h3>
+                    <p>Visualiza tus apuntes como mapas mentales para entender mejor las conexiones entre conceptos.</p>
+                    <button class="btn btn-outline">Crear mapa mental</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tab-content" id="subjects-tab">
+        <div class="subjects">
+            <h2 class="section-title" style="grid-column: 1 / -1;">Asignaturas disponibles</h2>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-flask"></i></div>
+                <h3>Química</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-calculator"></i></div>
+                <h3>Matemáticas</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-dna"></i></div>
+                <h3>Biología</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-landmark"></i></div>
+                <h3>Historia</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-globe-americas"></i></div>
+                <h3>Geografía</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-book"></i></div>
+                <h3>Literatura</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-language"></i></div>
+                <h3>Idiomas</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>Informática</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-brain"></i></div>
+                <h3>Psicología</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-briefcase-medical"></i></div>
+                <h3>Medicina</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-scale-balanced"></i></div>
+                <h3>Derecho</h3>
+            </div>
+            <div class="subject-card">
+                <div class="subject-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Economía</h3>
             </div>
         </div>
     </section>
@@ -576,51 +936,56 @@
     <div class="ad-container">
         <div class="ad-placeholder">Espacio publicitario</div>
     </div>
-
-    <section class="subjects">
-        <h2 class="section-title" style="grid-column: 1 / -1; text-align: center; margin-bottom: 20px;">Asignaturas disponibles</h2>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-flask"></i></div>
-            <h3>Química</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-calculator"></i></div>
-            <h3>Matemáticas</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-dna"></i></div>
-            <h3>Biología</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-landmark"></i></div>
-            <h3>Historia</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-globe-americas"></i></div>
-            <h3>Geografía</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-book"></i></div>
-            <h3>Literatura</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-language"></i></div>
-            <h3>Idiomas</h3>
-        </div>
-        <div class="subject-card">
-            <div class="subject-icon"><i class="fas fa-laptop-code"></i></div>
-            <h3>Informática</h3>
-        </div>
-    </section>
 
     <section class="cta-section">
-        <h2>Comienza a mejorar tus estudios hoy</h2>
+        <h2>Comienza a transformar tu aprendizaje hoy</h2>
         <p>Glovalis es completamente gratuito y está diseñado específicamente para estudiantes como tú.</p>
-        <button class="cta-button">Crear cuenta gratuita</button>
+        <button class="btn btn-large cta-button" id="ctaRegisterBtn">Crear cuenta gratuita</button>
     </section>
 
     <div class="ad-container">
         <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <!-- Modal de registro -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeRegisterModal">×</button>
+            <h2 style="text-align:center; margin-bottom:20px; color:var(--primary);">Crear cuenta</h2>
+            
+            <button class="btn-social" onclick="registrarConGoogle()">
+                <i class="fab fa-google"></i> Registrarse con Google
+            </button>
+            
+            <button class="btn-social" onclick="registrarConFacebook()">
+                <i class="fab fa-facebook"></i> Registrarse con Facebook
+            </button>
+            
+            <button class="btn-social" onclick="registrarConMicrosoft()">
+                <i class="fab fa-microsoft"></i> Registrarse con Microsoft
+            </button>
+            
+            <div class="divider">o</div>
+            
+            <button class="btn-social" onclick="mostrarFormularioEmail()">
+                <i class="fas fa-envelope"></i> Registrarse con email
+            </button>
+        </div>
+    </div>
+
+    <!-- Formulario de email -->
+    <div class="modal" id="emailFormModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeEmailModal">×</button>
+            <h2 style="text-align:center; margin-bottom:20px; color:var(--primary);">Registro con email</h2>
+            
+            <form id="formularioEmail" class="email-form">
+                <input type="text" placeholder="Nombre completo" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Crear cuenta</button>
+            </form>
+        </div>
     </div>
 
     <footer>
@@ -655,74 +1020,251 @@
             <div class="footer-column">
                 <h3>Síguenos</h3>
                 <ul>
-                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">X</a></li>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">Facebook</a></li>
                     <li><a href="#">YouTube</a></li>
                 </ul>
+                <div class="social-icons">
+                    <a href="#" aria-label="X" style="font-family: system-ui, -apple-system, sans-serif;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
         </div>
         <div class="copyright">
-            &copy; 2023 Glovalis. Todos los derechos reservados. Diseñado para estudiantes.
+            &copy; 2025 Glovalis. Todos los derechos reservados. Diseñado para estudiantes.
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatContainer = document.getElementById('chatContainer');
-            const userInput = document.getElementById('userInput');
-            const sendButton = document.getElementById('sendButton');
+        // Funciones para el sistema de registro
+        function abrirModalRegistro() {
+            console.log("Abriendo modal de registro");
+            document.getElementById('registerModal').style.display = 'flex';
+        }
+
+        function cerrarModalRegistro() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        function mostrarFormularioEmail() {
+            document.getElementById('registerModal').style.display = 'none';
+            document.getElementById('emailFormModal').style.display = 'flex';
+        }
+
+        function cerrarEmailForm() {
+            document.getElementById('emailFormModal').style.display = 'none';
+        }
+
+        // Funciones para registrar con diferentes proveedores
+        function registrarConGoogle() {
+            console.log("Registrando con Google");
+            window.location.href = 'https://tudominio.com/api/auth/google';
+        }
+
+        function registrarConFacebook() {
+            console.log("Registrando con Facebook");
+            window.location.href = 'https://tudominio.com/api/auth/facebook';
+        }
+
+        function registrarConMicrosoft() {
+            console.log("Registrando con Microsoft");
+            window.location.href = 'https://tudominio.com/api/auth/microsoft';
+        }
+
+        // Funciones para subir archivos
+        document.getElementById('uploadPdf').addEventListener('click', function() {
+            alert('Funcionalidad de subir PDF conectada a n8n');
+            // Aquí iría la conexión con n8n para subir PDF
+        });
+
+        document.getElementById('uploadImage').addEventListener('click', function() {
+            alert('Funcionalidad de subir imágenes conectada a n8n');
+            // Aquí iría la conexión con n8n para subir imágenes
+        });
+
+        document.getElementById('uploadYoutube').addEventListener('click', function() {
+            const url = prompt('Por favor, introduce la URL de YouTube:');
+            if (url) {
+                alert('URL de YouTube recibida: ' + url + '\nConectando con n8n...');
+                // Aquí iría la conexión con n8n para procesar la URL
+            }
+        });
+
+        // Manejar envío del formulario de email
+        document.getElementById('formularioEmail').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log("Formulario de email enviado");
             
-            // Respuestas predefinidas para el demo
-            const responses = [
-                "Interesante pregunta. Según los materiales de estudio, esto se explica como...",
-                "Ese concepto es fundamental. Podemos entenderlo mejor si lo dividimos en partes: primero...",
-                "Buena pregunta. Los estudios muestran que este fenómeno ocurre porque...",
-                "Ese tema es complejo pero fascinante. La explicación más aceptada es...",
-                "Para responder eso, necesitaríamos revisar los apuntes que hayas subido previamente.",
-                "Esa es una duda común entre estudiantes. La respuesta breve es...",
-                "Según los libros de texto, podemos abordar este tema desde diferentes perspectivas...",
-                "¡Excelente pregunta! La respuesta involucra varios conceptos que vale la pena explorar..."
+            // Obtener valores del formulario
+            const nombre = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            
+            // Validaciones básicas
+            if (!nombre || !email || !password) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+            
+            // Simular envío a n8n (en producción se conectaría realmente)
+            alert('Registro exitoso. Conectando con n8n...\n\nNombre: ' + nombre + '\nEmail: ' + email);
+            cerrarEmailForm();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Asignar eventos a los botones de cierre
+            document.getElementById('closeRegisterModal').addEventListener('click', cerrarModalRegistro);
+            document.getElementById('closeEmailModal').addEventListener('click', cerrarEmailForm);
+            
+            // Botón "Registrarse" en el header
+            document.getElementById('registerBtn').addEventListener('click', abrirModalRegistro);
+            
+            // Botón "Comenzar ahora" en el hero
+            document.getElementById('heroRegisterBtn').addEventListener('click', abrirModalRegistro);
+            
+            // Botón CTA
+            document.getElementById('ctaRegisterBtn').addEventListener('click', abrirModalRegistro);
+            
+            // Botón "Iniciar Sesión"
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                alert('Redirigiendo a página de inicio de sesión');
+                // Aquí iría la redirección real
+            });
+            
+            // Cerrar modales al hacer clic fuera de ellos
+            window.addEventListener('click', function(e) {
+                if (e.target.id === 'registerModal') {
+                    cerrarModalRegistro();
+                }
+                if (e.target.id === 'emailFormModal') {
+                    cerrarEmailForm();
+                }
+            });
+
+            // Tabs functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Deactivate all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(tc => tc.classList.remove('active'));
+                    
+                    // Activate current tab
+                    tab.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Chat functionality
+            const documentChat = document.getElementById('documentChat');
+            const documentInput = document.getElementById('documentInput');
+            const documentSend = document.getElementById('documentSend');
+            
+            const academicChat = document.getElementById('academicChat');
+            const academicInput = document.getElementById('academicInput');
+            const academicSend = document.getElementById('academicSend');
+            
+            // Respuestas para el chat de documentos
+            const documentResponses = [
+                "Basándome en el documento que subiste, puedo decirte que...",
+                "El contenido que has compartido menciona que...",
+                "Según el material que proporcionaste, el punto principal es...",
+                "He analizado tu documento y puedo resumir que...",
+                "Tu archivo contiene información valiosa sobre..."
             ];
             
-            function addMessage(message, isUser) {
+            // Respuestas académicas
+            const academicResponses = [
+                {
+                    message: "Según 'Biología Molecular de la Célula' (6ª edición) de Alberts et al., la fotosíntesis es un proceso que convierte la energía luminosa en energía química, produciendo ATP y NADPH.",
+                    sources: ["Alberts, B. et al. (2014). Molecular Biology of the Cell. 6th ed. Garland Science."]
+                },
+                {
+                    message: "De acuerdo con la investigación publicada en The Lancet (2020, Vol. 396, Issue 10258), los tratamientos basados en inmunoterapia han demostrado una eficacia del 67% en casos seleccionados de melanoma avanzado.",
+                    sources: ["Weber, J. et al. (2020). Adjuvant nivolumab versus ipilimumab in resected stage III/IV melanoma. The Lancet, 396(10258), 1443-1454."]
+                },
+                {
+                    message: "El Teorema Fundamental del Cálculo, según 'Cálculo de una Variable' de Stewart (9ª edición), establece la conexión entre los conceptos de derivación e integración.",
+                    sources: ["Stewart, J. (2020). Cálculo de una Variable. 9ª ed. Cengage Learning."]
+                }
+            ];
+            
+            function addMessage(chatElement, message, isUser, sources = []) {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message');
                 messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
                 
                 const now = new Date();
-                const timeString = isUser ? "Ahora" : `Hace 1 min`;
+                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 
-                messageDiv.innerHTML = `${message}<div class="message-time">${timeString}</div>`;
-                chatContainer.appendChild(messageDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                let messageHTML = `${message}<div class="message-time">${timeString}</div>`;
+                
+                if (sources.length > 0 && !isUser) {
+                    messageHTML += `<div class="sources"><strong>Fuentes verificadas:</strong> ${sources.join('; ')}</div>`;
+                }
+                
+                messageDiv.innerHTML = messageHTML;
+                chatElement.appendChild(messageDiv);
+                chatElement.scrollTop = chatElement.scrollHeight;
             }
             
-            function getRandomResponse() {
+            function getRandomResponse(responses) {
                 return responses[Math.floor(Math.random() * responses.length)];
             }
             
-            sendButton.addEventListener('click', function() {
-                const message = userInput.value.trim();
+            // Document chat
+            documentSend.addEventListener('click', function() {
+                const message = documentInput.value.trim();
                 if (message) {
-                    addMessage(message, true);
-                    userInput.value = '';
+                    addMessage(documentChat, message, true);
+                    documentInput.value = '';
                     
-                    // Simular tiempo de respuesta
                     setTimeout(() => {
-                        addMessage(getRandomResponse(), false);
+                        const response = getRandomResponse(documentResponses);
+                        addMessage(documentChat, response, false);
+                    }, 1000);
+                }
+            });
+            
+            documentInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    documentSend.click();
+                }
+            });
+            
+            // Academic chat
+            academicSend.addEventListener('click', function() {
+                const message = academicInput.value.trim();
+                if (message) {
+                    addMessage(academicChat, message, true);
+                    academicInput.value = '';
+                    
+                    setTimeout(() => {
+                        const response = getRandomResponse(academicResponses);
+                        addMessage(academicChat, response.message, false, response.sources);
                     }, 1500);
                 }
             });
             
-            userInput.addEventListener('keypress', function(e) {
+            academicInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    sendButton.click();
+                    academicSend.click();
                 }
             });
             
             // Efectos de hover en tarjetas
-            const cards = document.querySelectorAll('.feature-card, .subject-card');
+            const cards = document.querySelectorAll('.transform-card, .subject-card');
             cards.forEach(card => {
                 card.addEventListener('mouseenter', () => {
                     card.style.transform = 'translateY(-8px)';
@@ -731,7 +1273,7 @@
                 
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
-                    card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
+                    card.style.boxShadow = 'var(--card-shadow)';
                 });
             });
         });
